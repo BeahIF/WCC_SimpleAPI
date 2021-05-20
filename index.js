@@ -1,3 +1,13 @@
 const configExpress = require('./config/configExpress');
-let app = configExpress();
-app.listen(3000, ()=>console.log("Tá funcionando!"));
+const conexao = require('./infra/conexao');
+const Tabelas = require('./infra/Tabelas');
+conexao.connect(error => {
+    if(error){
+        throw error;
+    }
+    Tabelas.init(conexao);
+    let app = configExpress();
+    app.listen(3000, ()=>console.log("Tá funcionando!"));
+}
+
+);
