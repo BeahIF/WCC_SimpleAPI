@@ -10,6 +10,15 @@ class Agendamento{
             resp.status(201).json(results)
         })
     }
+    buscaPorId(id, res){
+        const sql = 'SELECT * FROM agendamentos WHERE id==?';
+        conexao.query(sql,id,(error,results)=>{
+            if(error){
+                res.status(400).json(error)
+            }
+            res.status(201).json(results)
+        })
+    }
     inserir(agendamento,resp){
         const sql = 'INSERT INTO agendamentos SET ?';
         const data_service = moment(agendamento.data_service).format('YYYY-MM-DD');
