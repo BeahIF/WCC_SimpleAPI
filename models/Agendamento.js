@@ -11,13 +11,22 @@ class Agendamento{
         })
     }
     buscaPorId(id, res){
-        const sql = 'SELECT * FROM agendamentos WHERE id==?';
+        const sql = 'SELECT * FROM agendamentos WHERE id=?';
         conexao.query(sql,id,(error,results)=>{
             if(error){
                 res.status(400).json(error)
             }
             res.status(201).json(results)
         })
+    }
+    editar(id, novoAgendamento, res){
+        const sql = 'UPDATE agendamentos SET ? WHERE id = ?';
+        conexao.query(sql,id, novoAgendamento, (error, results)=>{
+            if(error){
+                throw error
+            };
+            return res.status(201).json(results)
+        });
     }
     inserir(agendamento,resp){
         const sql = 'INSERT INTO agendamentos SET ?';
@@ -42,7 +51,8 @@ class Agendamento{
             if(error){
                 throw error
             };
-            console.log(results);
+            // console.log(results);
+            return resp.status(201).json(results)
         });
     }
 }
